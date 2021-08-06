@@ -39,4 +39,15 @@ router.put('/:id', validateAction, validateAction, (req, res) => {
         })
 })
 
+router.delete('/:id', validateActionId, (req, res) => {
+    const { id } = req.params
+    Actions.get(id)
+        .then(action => {
+            Actions.remove(id)
+                .then(() => {
+                    res.status(200).json(action)
+                })
+        })
+})
+
 module.exports = router
