@@ -16,6 +16,16 @@ function validateActionId(req, res, next) {
         })
 }
 
+function validateAction(req, res, next) {
+    const { description, notes, completed, project_id } = req.body
+    if(!description || !notes || !project_id || (completed == undefined)) {
+        res.status(400).json({ message: 'Please provide a description, some notes, the completed status, and a project id.'})
+    } else {
+        next()
+    }
+}
+
 module.exports = {
-    validateActionId
+    validateActionId,
+    validateAction
 }
