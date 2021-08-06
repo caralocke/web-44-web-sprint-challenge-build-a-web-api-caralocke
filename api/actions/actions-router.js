@@ -28,6 +28,13 @@ router.post('/', validateAction, (req, res) => {
     const newAction = { id, description, notes, completed, project_id }
     Actions.insert(newAction)
         .then(action => {
+            res.status(201).json(action)
+        })
+})
+
+router.put('/:id', validateAction, validateAction, (req, res) => {
+    Actions.update(req.params.id, req.body)
+        .then(action => {
             res.status(200).json(action)
         })
 })
