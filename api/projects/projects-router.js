@@ -32,4 +32,23 @@ router.get('/:id', (req, res) => {
     });
 })
 
+router.post('/', (req, res) => {
+    if(!req.body.name || !req.body.description) {
+        res.status(400).json({ message: 'Please provide name and descrption'})
+    } else {
+        const { name, description, completed } = req.body
+        const { id } = Date.now()
+        const newProject = { id, name, description, completed }
+        Projects.insert(newProject)
+            .then(project => {
+            res.status(201).json(project);
+            })
+            .catch(err => {
+            res.status(500).json({
+            message: err.message
+        });
+    });
+    }
+})
+
 module.exports = router
