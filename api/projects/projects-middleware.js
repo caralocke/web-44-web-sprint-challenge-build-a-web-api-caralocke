@@ -1,5 +1,6 @@
 // add middlewares here related to projects
 const Projects = require('./projects-model')
+
 function validateProjectId(req, res, next) {
     const { id } = req.params
     Projects.get(id)
@@ -7,8 +8,11 @@ function validateProjectId(req, res, next) {
             if(project) {
                 next()
             } else {
-                res.status(404).json({message :`Project with specified id of ${id} does not exist.`})
+                res.status(404).json({message : `Project with id of ${id} does not exist`})
             }
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message})
         })
 }
 
